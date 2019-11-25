@@ -35,6 +35,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+    // Fetch our suggestions once component mounts
     this.fetchSuggestions();
   }
 
@@ -49,6 +50,7 @@ class App extends Component {
   }
 }
 
+// Prop types/defaults
 App.propTypes = {
   suggestionsPath: PropTypes.string
 }
