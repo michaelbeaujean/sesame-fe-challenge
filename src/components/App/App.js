@@ -42,7 +42,7 @@ class App extends Component {
     return (
       <div className="App">
         <h1>Sesame Front-End Challenge</h1>
-        <p>Search a term below!</p>
+        <p>Search for a fruit below!</p>
         <AutocompleteSearch suggestions={this.state.suggestions} />
       </div>
     );
