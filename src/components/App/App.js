@@ -1,26 +1,60 @@
-import React from 'react';
-import logo from './logo.svg';
+// React
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
+// Components
+import AutocompleteSearch from '../AutocompleteSearch/AutocompleteSearch';
+
+// Styles
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      suggestions: []
+    }
+
+    this.fetchSuggestions = this.fetchSuggestions.bind(this);
+  }
+
+  fetchSuggestions() {
+    const { suggestionsPath } = this.props;
+
+    fetch(suggestionsPath)
+      .then(response => response.json())
+      .then(json => {
+        this.setState({
+          suggestions: json
+        })
+      })
+      .catch(error => {
+        console.log(`There was an error when trying to fetch the suggestions: ${error}`);
+      })
+  }
+
+  componentDidMount() {
+    this.fetchSuggestions();
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <h1>Sesame Front-End Challenge</h1>
+        <p>Search a term below!</p>
+        <AutocompleteSearch suggestions={this.state.suggestions} />
+      </div>
+    );
+  }
+}
+
+App.propTypes = {
+  suggestionsPath: PropTypes.string
+}
+
+App.defaultProps = {
+  suggestionsPath: ''
 }
 
 export default App;
