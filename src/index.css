@@ -1,21 +1,23 @@
-.search-input {
-  height: 2rem;
-  width: 100%;
-  font-size: 1rem;
+:root {
+  --white: #ffffff;
+  --black: #000000;
+  --grey: #cccccc;
 }
 
-.suggestions {
+* {
+  box-sizing: border-box;
+}
+
+body {
   margin: 0;
-  padding: 0;
-  list-style-type: none;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.suggestions li {
-    padding: 1rem 0;
-  }
-
-.suggestions li a:hover,
-      .suggestions li a.highlighted {
-        background-color: var(--black);
-        color: var(--white);
-      }
+.container {
+  width: 90%;
+  margin: 0 auto;
+}
