@@ -23,6 +23,7 @@ class AutocompleteSearch extends Component {
     // Binding methods
     this.onChange = this.onChange.bind(this);
     this.onClick = this.onClick.bind(this);
+    this.onKeyDown = this.onKeyDown.bind(this);
   }
 
   // Change event for user input field
@@ -39,9 +40,18 @@ class AutocompleteSearch extends Component {
       this.setState({
         highlightedSuggestion: 0,
         userInput: currentInput,
-        showSuggestions: true,
         relevantSuggestions: currentSuggestions
       });
+
+      if (currentSuggestions.length === 0) {
+        this.setState({
+          showSuggestions: false
+        });
+      } else {
+        this.setState({
+          showSuggestions: true
+        });
+      }
     } else {
       // Else, reset the state to default
       this.setState({
@@ -69,7 +79,7 @@ class AutocompleteSearch extends Component {
 
   onKeyDown = e => {
     const { keyCode } = e,
-          { highlightedSuggestion, relevantSuggestions } = this.state;
+          { highlightedSuggestion, relevantSuggestions, showSuggestions } = this.state;
 
     // Up key
     if (keyCode === 38) {
@@ -90,10 +100,14 @@ class AutocompleteSearch extends Component {
       e.preventDefault();
       e.stopPropagation();
 
-      this.setState({
-        userInput: relevantSuggestions[highlightedSuggestion],
-        showSuggestions: false
-      });
+      if (showSuggestions) {
+        this.setState({
+          highlightedSuggestion: 0,
+          relevantSuggestions: [],
+          userInput: relevantSuggestions[highlightedSuggestion],
+          showSuggestions: false
+        });
+      }
     }
   }
 
@@ -116,7 +130,7 @@ class AutocompleteSearch extends Component {
                       href={ `#${suggestion}` }
                       className={ highlighted }
                     >
-                      { suggestion }
+                      <span>{ suggestion }</span>
                     </a>
                   </li>
                 );

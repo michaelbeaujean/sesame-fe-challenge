@@ -5,9 +5,6 @@ import PropTypes from 'prop-types';
 // Components
 import AutocompleteSearch from '../AutocompleteSearch/AutocompleteSearch';
 
-// Styles
-import './App.css';
-
 class App extends Component {
   constructor(props) {
     super(props);
