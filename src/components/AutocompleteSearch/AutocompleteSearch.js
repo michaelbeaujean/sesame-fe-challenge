@@ -10,6 +10,8 @@ class AutocompleteSearch extends Component {
 
     // Component state that we will connec to user input and expected behavior
     this.state = {
+      // Index of suggestions for up/down functionality
+      highlightedSuggestion: 0,
       // Relevant suggestions based on user input
       relevantSuggestions: [],
       // Boolean to determine if we show the suggestion list
@@ -35,6 +37,7 @@ class AutocompleteSearch extends Component {
       );
 
       this.setState({
+        highlightedSuggestion: 0,
         userInput: currentInput,
         showSuggestions: true,
         relevantSuggestions: currentSuggestions
@@ -42,6 +45,7 @@ class AutocompleteSearch extends Component {
     } else {
       // Else, reset the state to default
       this.setState({
+        highlightedSuggestion: 0,
         userInput: '',
         showSuggestions: false,
         relevantSuggestions: []
@@ -63,20 +67,57 @@ class AutocompleteSearch extends Component {
     });
   }
 
+  onKeyDown = e => {
+    const { keyCode } = e,
+          { highlightedSuggestion, relevantSuggestions } = this.state;
+
+    // Up key
+    if (keyCode === 38) {
+      if (highlightedSuggestion > 0) {
+        this.setState({
+          highlightedSuggestion: highlightedSuggestion - 1
+        });
+      }
+    // Down key
+    } else if (keyCode === 40) {
+      if (highlightedSuggestion < relevantSuggestions.length - 1) {
+        this.setState({
+          highlightedSuggestion: highlightedSuggestion + 1
+        });
+      }
+    // Enter key
+    } else if (keyCode === 13) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      this.setState({
+        userInput: relevantSuggestions[highlightedSuggestion],
+        showSuggestions: false
+      });
+    }
+  }
+
   render() {
-    const { onChange, onClick } = this,
-          { userInput, relevantSuggestions, showSuggestions } = this.state,
+    const { onChange, onClick, onKeyDown } = this,
+          { highlightedSuggestion, userInput, relevantSuggestions, showSuggestions } = this.state,
           // If showSuggestions is true, render the suggestion list
           // Else return a blank string
           suggestionList = showSuggestions ? (
-            <ul>
+            <ul className="suggestions">
               {relevantSuggestions.map( (suggestion, index) => {
+                const highlighted = (index === highlightedSuggestion) ? 'highlighted' : '';
+
                 return (
                   <li 
                     key={ index }
                     onClick={ onClick }
                   >
-                    { suggestion }
+                    <a
+                      href={ `#${suggestion}` }
+                      className={ highlighted }
+                    >
+                      { suggestion }
+                    </a>
                   </li>
                 );
               })}
@@ -92,6 +133,7 @@ class AutocompleteSearch extends Component {
             placeholder="What fruit are you looking for today?"
             aria-label="Search" 
             onChange={ onChange }
+            onKeyDown={ onKeyDown }
             value={ userInput }
           />
           { suggestionList }

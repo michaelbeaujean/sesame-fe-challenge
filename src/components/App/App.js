@@ -41,7 +41,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="container">
         <h1>Sesame Front-End Challenge</h1>
         <p>Search for a fruit below!</p>
         <AutocompleteSearch suggestions={this.state.suggestions} />
