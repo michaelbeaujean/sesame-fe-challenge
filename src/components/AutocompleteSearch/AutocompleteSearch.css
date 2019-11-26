@@ -12,9 +12,28 @@
 
 .search-input {
   height: 3rem;
-  width: 100%;
+  width: calc(100% - 80px);
   font-size: 1rem;
   text-indent: 1rem;
+  border: none;
+  outline: none;
+}
+
+.search-button {
+  width: 80px;
+  height: 3rem;
+  vertical-align: top;
+  background-color: var(--blue);
+  font-size: 1rem;
+  font-weight: 700;
+  border: none;
+  outline: none;
+}
+
+.search-button:hover {
+  background-color: var(--black);
+  color: var(--blue);
+  cursor: pointer;
 }
 
 .suggestions {

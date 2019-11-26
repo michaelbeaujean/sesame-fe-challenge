@@ -30,6 +30,7 @@ class AutocompleteSearch extends Component {
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onMouseEnter = this.onMouseEnter.bind(this);
     this.onMouseLeave = this.onMouseLeave.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   // Change event for user input field
@@ -141,8 +142,18 @@ class AutocompleteSearch extends Component {
     }
   }
 
+  // On search form submit
+  onSubmit = e => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const { userInput } = this.state;
+
+    console.log(`Searching for "${userInput}"`);
+  }
+
   render() {
-    const { onChange, onClick, onKeyDown, onMouseEnter, onMouseLeave } = this,
+    const { onChange, onClick, onKeyDown, onMouseEnter, onMouseLeave, onSubmit } = this,
           { highlightedSuggestion, userInput, relevantSuggestions, showSuggestions } = this.state,
           // If showSuggestions is true, render the suggestion list
           // Else return a blank string
@@ -186,12 +197,13 @@ class AutocompleteSearch extends Component {
           <input
             className="search-input"
             type="text"
-            placeholder="What fruit or vegetable are you looking for today?"
+            placeholder="What fruit or veg are you looking for?"
             aria-label="Search" 
             onChange={ onChange }
             onKeyDown={ onKeyDown }
             value={ userInput }
           />
+          <button className="search-button" type="submit" onClick={onSubmit}>Search</button>
           { suggestionList }
         </form>
       </div>

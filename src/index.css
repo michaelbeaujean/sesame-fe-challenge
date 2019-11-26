@@ -1,9 +1,9 @@
 :root {
   --white: #ffffff;
-  --black: #000000;
+  --black: #2a2a2a;
   --grey: #cccccc;
-  --purple: #45166a;
   --yellow: #EBC900;
+  --blue: #a5e6ec;
 
   --headlineFont: 'Vollkorn', serif;
   --bodyFont: 'Roboto', sans-serif;
