@@ -19,19 +19,23 @@ class AutocompleteSearch extends Component {
       // Boolean to determine if we show the suggestion list
       showSuggestions: false,
       // User's input to the search field
-      userInput: ''
+      userInput: '',
+      // Storing old user input for when we change the input value on suggestion hover
+      storedUserInput: ''
     }
 
     // Binding methods
     this.onChange = this.onChange.bind(this);
     this.onClick = this.onClick.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
+    this.onMouseEnter = this.onMouseEnter.bind(this);
+    this.onMouseLeave = this.onMouseLeave.bind(this);
   }
 
   // Change event for user input field
   onChange = e => {
     const { suggestions } = this.props,
-          currentInput = e.currentTarget.value;
+    currentInput = e.currentTarget.value;
 
     // If the user input is not empty, filter through suggestions and update state accordingly
     if (currentInput !== '') {
@@ -42,6 +46,7 @@ class AutocompleteSearch extends Component {
       this.setState({
         highlightedSuggestion: 0,
         userInput: currentInput,
+        storedUserInput: currentInput,
         relevantSuggestions: currentSuggestions
       });
 
@@ -79,6 +84,7 @@ class AutocompleteSearch extends Component {
     });
   }
 
+  // Control key events
   onKeyDown = e => {
     const { keyCode } = e,
           { highlightedSuggestion, relevantSuggestions, showSuggestions } = this.state;
@@ -113,8 +119,31 @@ class AutocompleteSearch extends Component {
     }
   }
 
+  // Hover on suggestions
+  onMouseEnter = e => {
+    const { currentTarget } = e,
+          { userInput } = this.state,
+          suggestionText = currentTarget.innerText;
+
+    if (currentTarget.classList.contains('suggestion')) {
+      this.setState({
+        userInput: suggestionText
+      })
+    }
+  }
+
+  onMouseLeave = e => {
+    const { userInput, storedUserInput } = this.state;
+
+    if (userInput !== storedUserInput) {
+      this.setState({
+        userInput: storedUserInput
+      })
+    }
+  }
+
   render() {
-    const { onChange, onClick, onKeyDown } = this,
+    const { onChange, onClick, onKeyDown, onMouseEnter, onMouseLeave } = this,
           { highlightedSuggestion, userInput, relevantSuggestions, showSuggestions } = this.state,
           // If showSuggestions is true, render the suggestion list
           // Else return a blank string
@@ -137,10 +166,12 @@ class AutocompleteSearch extends Component {
                   >
                     <a
                       href={ `#${suggestion}` }
-                      className={ highlightedClass }
+                      className={ `suggestion ${highlightedClass}` }
                       aria-selected={ highlighted }
                       role="option"
                       tabIndex={ index }
+                      onMouseEnter={ onMouseEnter }
+                      onMouseLeave={ onMouseLeave }
                     >
                       <span className="suggestion-text">{ suggestionStr }</span>
                     </a>

@@ -19,7 +19,7 @@
   padding: 2rem 0;
 }
 
-.suggestions li a {
+.suggestions li .suggestion {
   position: absolute;
   top: 0;
   left: 0;
@@ -28,7 +28,7 @@
   border-bottom: 1px solid var(--grey);
 }
 
-.suggestions li:last-child a {
+.suggestions li:last-child .suggestion {
   border-bottom: none;
 }
 
