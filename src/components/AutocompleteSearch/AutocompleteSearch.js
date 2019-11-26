@@ -128,7 +128,7 @@ class AutocompleteSearch extends Component {
     if (currentTarget.classList.contains('suggestion')) {
       this.setState({
         userInput: suggestionText
-      })
+      });
     }
   }
 
@@ -138,7 +138,7 @@ class AutocompleteSearch extends Component {
     if (userInput !== storedUserInput) {
       this.setState({
         userInput: storedUserInput
-      })
+      });
     }
   }
 
@@ -149,7 +149,9 @@ class AutocompleteSearch extends Component {
 
     const { userInput } = this.state;
 
-    console.log(`Searching for "${userInput}"`);
+    if (userInput !== '') {
+      console.log(`Searching for "${userInput}"`);
+    }
   }
 
   render() {
