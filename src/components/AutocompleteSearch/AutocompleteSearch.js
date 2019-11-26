@@ -122,7 +122,6 @@ class AutocompleteSearch extends Component {
   // Hover on suggestions
   onMouseEnter = e => {
     const { currentTarget } = e,
-          { userInput } = this.state,
           suggestionText = currentTarget.innerText;
 
     if (currentTarget.classList.contains('suggestion')) {
@@ -182,12 +181,12 @@ class AutocompleteSearch extends Component {
           ) : '';
           
     return (
-      <div>
+      <div className="search-wrapper">
         <form>
           <input
             className="search-input"
             type="text"
-            placeholder="What fruit are you looking for today?"
+            placeholder="What fruit or vegetable are you looking for today?"
             aria-label="Search" 
             onChange={ onChange }
             onKeyDown={ onKeyDown }
