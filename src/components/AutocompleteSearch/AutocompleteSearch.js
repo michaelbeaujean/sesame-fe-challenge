@@ -158,7 +158,7 @@ class AutocompleteSearch extends Component {
           // If showSuggestions is true, render the suggestion list
           // Else return a blank string
           suggestionList = showSuggestions ? (
-            <ul className="suggestions">
+            <ul className="suggestions shadow">
               {relevantSuggestions.map( (suggestion, index) => {
                 const highlighted = index === highlightedSuggestion,
                       highlightedClass = highlighted ? 'highlighted' : '',
@@ -193,7 +193,7 @@ class AutocompleteSearch extends Component {
           
     return (
       <div className="search-wrapper">
-        <form>
+        <form className="shadow">
           <input
             className="search-input"
             type="text"

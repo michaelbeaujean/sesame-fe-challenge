@@ -77,3 +77,7 @@ p {
     white-space: nowrap;
   }
 }
+
+.shadow {
+  box-shadow: 0 3px 5px 0px rgba(0,0,0,0.29);
+}
