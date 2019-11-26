@@ -28,5 +28,7 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "html-react-parser": "^0.10.0"
+  }
 }

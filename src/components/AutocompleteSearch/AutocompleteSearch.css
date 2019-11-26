@@ -32,11 +32,15 @@
   border-bottom: none;
 }
 
-.suggestions li span {
+.suggestions li .suggestion-text {
   position: absolute;
   top: 50%;
   left: 1rem;
   transform: translateY(-50%);
+}
+
+.suggestions li .suggestion-text::first-letter {
+  text-transform: uppercase;
 }
 
 .suggestions li a:hover,

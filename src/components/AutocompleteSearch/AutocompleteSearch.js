@@ -1,6 +1,8 @@
 // React
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+// Adding html-react-parser to safely pass html string to render()
+import parse from 'html-react-parser';
 // Styles
 import './AutocompleteSearch.css';
 
@@ -119,7 +121,14 @@ class AutocompleteSearch extends Component {
           suggestionList = showSuggestions ? (
             <ul className="suggestions">
               {relevantSuggestions.map( (suggestion, index) => {
-                const highlighted = (index === highlightedSuggestion) ? 'highlighted' : '';
+                const highlighted = index === highlightedSuggestion,
+                      highlightedClass = highlighted ? 'highlighted' : '',
+                      // creating a case insensitive global regex for user input
+                      userInputRegEx = new RegExp(userInput, 'ig'),
+                      // creating variable to output highlighted suggestion text based on if the suggestion contains user input regex
+                      suggestionStr = suggestion.match(userInputRegEx) ?
+                                      parse(suggestion.replace(userInputRegEx, `<span class="bold">${userInput}</span>`)) :
+                                      suggestion;
 
                 return (
                   <li 
@@ -128,16 +137,19 @@ class AutocompleteSearch extends Component {
                   >
                     <a
                       href={ `#${suggestion}` }
-                      className={ highlighted }
+                      className={ highlightedClass }
+                      aria-selected={ highlighted }
+                      role="option"
+                      tabIndex={ index }
                     >
-                      <span>{ suggestion }</span>
+                      <span className="suggestion-text">{ suggestionStr }</span>
                     </a>
                   </li>
                 );
               })}
             </ul>
           ) : '';
-
+          
     return (
       <div>
         <form>
