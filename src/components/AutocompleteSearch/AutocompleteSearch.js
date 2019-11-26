@@ -155,7 +155,7 @@ class AutocompleteSearch extends Component {
                       userInputRegEx = new RegExp(userInput, 'ig'),
                       // creating variable to output highlighted suggestion text based on if the suggestion contains user input regex
                       suggestionStr = suggestion.match(userInputRegEx) ?
-                                      parse(suggestion.replace(userInputRegEx, `<span class="bold">${userInput}</span>`)) :
+                                      parse(suggestion.replace(userInputRegEx, `<span class="bold">${userInput.toLowerCase()}</span>`)) :
                                       suggestion;
 
                 return (
